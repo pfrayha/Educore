@@ -1,11 +1,12 @@
-from abc import ABC, abstractmethod
+from ..manager_interfaces.registration_manager import IRegistrationManager
 
-class RegistrationManager(ABC):
-    @abstractmethod
+from flask import render_template
+
+class RegistrationManager(IRegistrationManager):
+    @staticmethod
     def get_registration_form():
-        pass
+        return render_template("student/student.html")
 
-    @abstractmethod
+    @staticmethod
     def submit_registration_form(json_data):
         pass
-    
