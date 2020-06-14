@@ -9,6 +9,12 @@ def new_guardian():
 	form = ManagerHub.get_hub_instance().registration_manager.get_registration_form(model='guardian')
 	return form
 
-@people.route('/people/new_volunteer')
+@people.route('/people/new_volunteer', methods=['GET'])
 def new_volunteer():
 	form = ManagerHub.get_hub_instance().registration_manager.get_registration_form(model='volunteer')
+	return form
+
+@people.route('/people/new_student', methods=['GET'])
+def new_student():
+	form = ManagerHub.get_hub_instance().registration_manager.get_registration_form(model='student')
+	return form
