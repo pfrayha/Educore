@@ -4,7 +4,7 @@ from flask import render_template
 
 class RegistrationManager(IRegistrationManager):
     @staticmethod
-    def get_registration_form():
+    def get_registration_form(model):
         return render_template("student/student.html")
 
     @staticmethod
