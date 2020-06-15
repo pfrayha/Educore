@@ -1,4 +1,4 @@
-from ..manager_interfaces.registration_manager import IRegistrationManager
+from educore.manager_interfaces import IRegistrationManager
 
 from flask import render_template
 
