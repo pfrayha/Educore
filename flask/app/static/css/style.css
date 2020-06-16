@@ -1,0 +1,308 @@
+body, html {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+  padding-top:50px;
+  font-size: 16px;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+}
+
+body, h1, h2, h3 {
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+}
+
+hr {
+  border-top: 1px solid #ccc;
+
+}
+
+.mybtn.btn-swtich {
+  padding-bottom: 15px;
+  float: right;
+}
+
+.btn.btn-default {
+  background: #4e7ff0 none repeat scroll 0 0;
+  border-color: #4e7ff0;
+  color: #ffffff;
+  font-size: 18px;
+  line-height: 1.3333333;
+  padding: 10px 16px;
+}
+
+.btn.btn-warning {
+  background: #f0ad4e none repeat scroll 0 0;
+  border-color: #eea236;
+  color: #ffffff;
+  font-size: 16px;
+  line-height: 1.3333333;
+  padding: 8px 12px;
+}
+
+.center {
+    margin: auto;
+    width: 80%;
+    padding: 10px;
+    height: auto;
+}
+
+.wrapper {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto 0;
+  padding: 0 0 0px;
+  position: relative;
+  background-color: #bbd9f336;
+}
+
+.novidades{
+  padding: 30px;
+}
+
+.novidades-cartao{
+  border: solid #000;
+  border-width: 0.33px 0.33px;
+  background: #f4fcff;
+  min-height: 100%;
+  box-shadow: 8px 8px 40px #474747;
+  margin: 15px 15px;
+  padding-bottom: 10px;
+}
+
+.novidades-lista{
+  padding-left: 20px;
+}
+/*pessoas*/
+.alunos{
+  padding: 50px;
+  /*background-color: #bbd9f336;*/
+}
+
+.aprendizes{
+  padding: 50px;
+  background-color: #bbf3c79e;
+}
+
+.voluntarios{
+  padding: 50px;
+  background-color: #f3bbf157;
+}
+/*fim pessoas*/
+
+/*atividades*/
+
+.atv-neam{
+  padding: 50px;
+}
+
+.atv-reforco{
+  padding: 50px;
+  background-color: #bbf3c79e;
+}
+
+.atv-fora{
+  padding: 50px;
+  background-color: #f3bbf157;
+}
+
+.navbar-default {
+    background-color: #3667a4;
+    border-color: #e7e7e7;
+}
+
+.navbar-default .navbar-brand, .navbar-default .navbar-nav>li>a {
+    color: #f4fcff;
+}
+
+.navbar-default .navbar-nav>.disabled>a, .navbar-default .navbar-nav>.disabled>a:focus, .navbar-default .navbar-nav>.disabled>a:hover {
+    color: #dad7d782;
+    background-color: transparent;
+}
+
+footer{
+    padding: 64px 0;
+    background-color: #3667a4;
+    bottom: 0;
+    width: 100%;
+}
+
+.text-muted{
+  color:#f4fcff;
+}
+
+.form-group {
+  width: 100%;
+  padding-left: 0px;
+}
+
+.form-control.filtro {
+  width: 120px;
+  margin: 10px auto;
+}
+
+.sub {
+  color: #fff;
+  background-color: #3667a4;
+  padding: 4px 0 4px 4px;
+}
+
+.return-div {
+  margin-top: 20px;
+}
+
+.dash-intro{
+  margin-bottom: 50px;
+}
+
+/*cartoes de novidade*/
+.cartao-content {
+  background: #ffffff;
+  border: 4px;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
+  border-radius: 10px;
+}
+
+.cartao-titulo h4{
+  font-size: 12px;
+  color: #fff;
+  margin:0;
+  padding:10px 5px;
+   line-height: 0;
+  background-color: #3667a4;
+  border-radius: 10px 10px 0px 0px;
+}
+
+.cartao-desc {
+  padding: 1.25rem;
+}
+
+.cartao-desc h3 {
+  color: #000000;
+  font-weight: 600;
+  font-size: 1.5em;
+  line-height: 1.3em;
+  margin-top: 0;
+  margin-bottom: 5px;
+  padding: 0;
+}
+
+.cartao-desc ul {
+  color: #747373;
+  font-size: 14px;
+  font-weight: 400;
+  font-size: 1em;
+  line-height: 1.5;
+  margin: 0px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  padding: 0;
+  padding-left: 1.5rem;
+  font-family: 'Raleway', sans-serif;
+}
+/*fim cartoes de novidade*/
+
+.flashed-messages{
+  padding-top: 10px;
+  z-index: 10
+}
+
+.invisivel{
+  color: transparent;
+  cursor: default;
+}
+
+/*
+palheta
+#bbd9f3
+#83a6cc
+#3667a4
+#3667a4*/
+
+.graficos{
+  border:1px solid gray; 
+  margin-top:20px;
+  margin-bottom:20px;
+  background-color: rgb(241, 247, 253);
+  box-shadow: 1px 1px;
+  border-radius:5px;
+}
+
+.container{
+  width:80%;
+}
+
+
+/* PAINEL DE ATIVIDADES  */
+
+.row.titulo_painel {
+  text-align:center;
+  margin: 0 auto 2% auto;
+}
+
+.calendario {
+  margin: 1% auto;
+  width: 100%;
+} 
+
+table {
+  border: 1px solid #848484;
+  border-radius: 5px;
+}
+
+.calendario thead{
+  background-color: #d2d2d2;
+  color: black;
+}
+
+.panel-elemento {
+    border-color: #3667a4;
+}
+.panel-elemento>.panel-heading {
+    color: #fff;
+    background-color: #3667a4;
+    border-color: #3667a4;
+}
+
+.calendario td:first-child, .calendario th:first-child{
+  width: 8% !important;
+}
+
+.calendario tbody tr {
+  height: 150px;
+}
+
+.calendario th {
+  width: 13.4%;
+  text-align: center;
+  border: 1px solid #848484 !important;
+  vertical-align: middle !important;
+}
+
+.calendario td{
+  text-align: center;
+  vertical-align: middle !important;
+  min-height: 300px;
+  border: 1px solid #848484 !important;
+}
+
+.calendario .panel{
+ transition: all .2s ease-in-out; 
+}
+
+.calendario .panel:hover {
+  transform: scale(1.05);
+}
+
+.botoes{
+  text-align:center;
+}

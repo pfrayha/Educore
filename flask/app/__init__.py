@@ -30,7 +30,7 @@ def create_app(config_name):
     app.config.from_pyfile('config.py')
 
     #secret key
-    app.secret_key = 'ldCz3GWmhos8QUJPGVt9'
+    app.secret_key = 'qI-TQ8gBBga6MOX85ZcCFSNgKkMMOdAf'
     
     #db
     db.init_app(app)
@@ -50,9 +50,12 @@ def create_app(config_name):
 
     Bootstrap(app)
 
+    from .auth import auth as auth_blueprint
+    app.register_blueprint(auth_blueprint, url_prefix='/auth')
+
     app = configure_educore(app, RegistrationManager, ReportManager)
 
-        #error handlers
+    #error handlers
     @app.errorhandler(403)
     def forbidden(error):
         return render_template('errors/403.html', title='Forbidden'), 403
