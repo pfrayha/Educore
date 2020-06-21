@@ -37,9 +37,9 @@ def login():
         if user is not None and user.verify_password(form.password.data):
             login_user(user)
             if user.user_type.type_name == 'admin':
-                return redirect(url_for('people.new_student'))
+                return redirect(url_for('home.admin_dashboard'))
             else:
-                return redirect(url_for('people.new_volunteer'))
+                return redirect(url_for('home.dashboard'))
         else:
             flash('Email ou senha inválidos.')
 

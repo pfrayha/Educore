@@ -1,0 +1,54 @@
+{% import "bootstrap/utils.html" as utils %}
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block body %}
+<div class="content-section">
+  <div class="outer">
+    <div class="middle">
+      <div class="inner">
+        <br/>
+        {{ utils.flashed_messages() }}
+        <br/>
+        <h1 style="text-align:center;"> Bem-Vindo administrador.</h1>
+          <hr class="intro-divider">
+          <div class="center dash-intro">
+            <p>
+              Clique no link "pessoas" acima para administrar alunos, aprendizes e voluntários. 
+            </p>
+            <p>Qualquer bug, dúvida ou sugestão, contate-nos!</p>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="cartao-content">
+                  <div class="cartao-titulo">
+                    <h4> Novo usuário </h4>
+                  </div>
+                  <div class="cartao-desc">
+                    <a href="{{ url_for('auth.register') }}">Registre um novo usuário</a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                  <div class="cartao-content">
+                      <div class="cartao-titulo">
+                        <h4> Novidade </h4>
+                      </div>
+                      <div class="cartao-desc">
+                          <h3>Versão 1.0</h3>
+                          <ul>
+                            <li>Adicionado login e logout de administradores.</li>
+                            <li>Adicionado cadastro de pessoas, instituições, eventos e atividades.</li>
+                            <li>Adicionado protótipo de relatório.</li>
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
