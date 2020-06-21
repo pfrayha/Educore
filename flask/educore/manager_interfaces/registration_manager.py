@@ -6,6 +6,6 @@ class IRegistrationManager(ABC):
         pass
 
     @abstractmethod
-    def submit_registration_form(model, json_data):
+    def submit_registration_form(model):
         pass
     

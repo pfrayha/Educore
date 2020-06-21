@@ -9,6 +9,11 @@ def new_guardian():
 	form = ManagerHub.get_hub_instance().registration_manager.get_registration_form(model='guardian')
 	return form
 
+@people.route('/people/new_guardian', methods=['POST'])
+@login_required
+def submit_guardian_form():
+	response = ManagerHub.get_hub_instance().registration_manager.submit_registration_form(model='guardian')
+
 @people.route('/people/new_volunteer', methods=['GET'])
 @login_required
 def new_volunteer():
