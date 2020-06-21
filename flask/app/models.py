@@ -23,6 +23,11 @@ class Serializer(object):
     def serialize_list(l):
         return [m.serialize() for m in l]
 
+class UserType(db.Model):
+    __tablename__ = 'user_types'
+    id = db.Column(db.Integer, primary_key=True)
+    type_name = db.Column(db.String(128), unique=True, nullable=False)
+
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
 
@@ -30,7 +35,10 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(128), unique=True)
     password_hash = db.Column(db.String(128))
     email = db.Column(db.String(128), index=True, unique=True)
-    clearance = db.Column(db.Integer, nullable=False, default=0)
+    enabled = db.Column(db.Boolean, nullable=False, default=True)
+
+    user_type_id = db.Column(db.Integer, db.ForeignKey('user_types.id'), nullable=False)
+    user_type = db.relationship('UserType', backref=db.backref('users', lazy=True))
 
     @property
     def password(self):

@@ -4,15 +4,22 @@ from flask_login import login_required, login_user, logout_user
 from . import auth
 from .forms import LoginForm, RegistrationForm
 from .. import db
-from ..models import User
+from ..models import User, UserType
 
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
 
     form = RegistrationForm()
+    form.user_type_id.choices = [(t.id, t.type_name) for t in UserType.query.order_by("type_name")]
     if form.validate_on_submit():
 
-        user = User(username=form.username.data, email=form.email.data, password=form.password.data)
+        user = User(
+            username=form.username.data, 
+            email=form.email.data, 
+            password=form.password.data, 
+            enabled=form.enabled.data,
+            user_type_id=form.user_type_id.data
+        )
 
         db.session.add(user)
         db.session.commit()
@@ -29,7 +36,7 @@ def login():
         user = User.query.filter_by(email=form.email.data).first()
         if user is not None and user.verify_password(form.password.data):
             login_user(user)
-            if user.clearance == 0:
+            if user.user_type.type_name == 'admin':
                 return redirect(url_for('people.new_student'))
             else:
                 return redirect(url_for('people.new_volunteer'))
