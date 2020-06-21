@@ -89,6 +89,11 @@ class Guardian(db.Model):
     address_cep = db.Column(db.CHAR(8))
 
     dependants = db.relationship('Student',backref=db.backref('guardian', lazy=True))
+
+student_class_association = db.Table('student_classes',db.Model.metadata,
+    db.Column('student_id', db.Integer, db.ForeignKey('students.id')),
+    db.Column('class_id', db.Integer, db.ForeignKey('classes.id'))
+)
     
 class Student(db.Model):
     __tablename__ = 'students'
@@ -96,3 +101,22 @@ class Student(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(128), unique=True)
     guardian_id = db.Column(db.Integer, db.ForeignKey('guardians.id'),nullable=False)
+    classes = db.relationship('Class', secondary = student_class_association)
+
+class Subject(db.Model):
+    __tablename__ = 'subjects'
+
+    id = db.Column(db.Integer, primary_key=True)
+    subject_name = db.Column(db.String(128), unique=True)
+
+class Class(db.Model):
+    __tablename__ = 'classes'
+
+    id = db.Column(db.Integer, primary_key=True)
+    subject_id = db.Column(db.Integer, db.ForeignKey('subjects.id'), nullable=False)
+    teacher_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+
+    subject = db.relationship('Subject', backref=db.backref('subjects', lazy=True))
+    teacher = db.relationship('User', backref=db.backref('classes', lazy=True))
+
+    students = db.relationship('Student', secondary = student_class_association)
