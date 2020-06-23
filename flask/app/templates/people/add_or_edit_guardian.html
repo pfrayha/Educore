@@ -1,0 +1,72 @@
+{% import "bootstrap/wtf.html" as wtf %}
+{% extends "base.html" %}
+{% block title %}Pessoas{% endblock %}
+{% block body %}
+<div class="content-section">
+    <div class="center text-center">
+    	<h1>Adicionar um Responsável</h1>
+        <hr class="intro-divider">
+    </div>
+
+    <div class="container">
+        <form id='form-guardian' class="form form-horizontal" method="post" role="form" enctype="multipart/form-data" action=" {{ url_for('people.new_guardian') }} ">
+
+    		 {{ form.hidden_tag() }}
+             {{ wtf.form_errors(form, hiddens="only") }}
+
+            <div class="row">
+                <h3 class="sub"> Dados pessoais </h3>
+
+                <div class="col-md-4">
+                    {{ wtf.form_field(form.name) }}
+                </div>
+                <div class="col-md-4">
+                    {{ wtf.form_field(form.email) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    {{ wtf.form_field(form.cellphone) }}
+                </div>
+                <div class="col-md-2">
+                    {{ wtf.form_field(form.housephone) }}
+                </div>
+            </div>
+            <div class="row">
+                <h3 class="sub"> Dados de contato </h3>
+                <div class="col-sm-1">
+                    {{ wtf.form_field(form.address_uf) }}
+                </div>
+                <div class="col-sm-2">
+                    {{ wtf.form_field(form.address_city) }}
+                </div>
+                <div class="col-sm-2">
+                    {{ wtf.form_field(form.address_cep) }}
+                </div>
+                <div class="col-sm-2">
+                    {{ wtf.form_field(form.address_neighborhood) }}
+                </div>
+                <div class="col-sm-3">
+                    {{ wtf.form_field(form.address_street) }}
+                </div>
+                <div class="col-sm-1">
+                    {{ wtf.form_field(form.address_number) }}
+                </div>
+                <div class="col-sm-1">
+                    {{ wtf.form_field(form.address_complement) }}
+                </div>
+            </div>
+            <hr>
+            <div class="center" style="max-width: 135px; margin-bottom: 3%;">
+                {{ wtf.form_field(form.submit) }}
+            </div>
+         </form>
+     </div>
+</div>
+
+<script type="text/javascript">
+
+</script>
+
+{% endblock %}
+

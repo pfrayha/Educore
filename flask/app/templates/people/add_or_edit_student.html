@@ -1,0 +1,42 @@
+{% import "bootstrap/wtf.html" as wtf %}
+{% extends "base.html" %}
+{% block title %}Pessoas{% endblock %}
+{% block body %}
+<div class="content-section">
+    <div class="center text-center">
+
+    	<h1>Adicionar um aluno</h1>
+        <hr class="intro-divider">
+
+    </div>
+
+    <div class="container">
+    	   <form id='form-pessoas' class="form form-horizontal" method="post" role="form" enctype="multipart/form-data" action=" {{ url_for('people.new_student') }} ">
+
+    		 {{ form.hidden_tag() }}
+             {{ wtf.form_errors(form, hiddens="only") }}
+
+            <div class="row">
+                <h3 class="sub"> Dados pessoais </h3>
+
+                <div class="col-md-4">
+                    {{ wtf.form_field(form.name) }}
+                </div>
+                <div class="col-md-8">
+                    {{ wtf.form_field(form.guardian_id) }}
+                </div>
+            </div>
+            <hr>
+            <div class="center" style="max-width: 135px; margin-bottom: 3%;">
+                {{ wtf.form_field(form.submit) }}
+            </div>
+         </form>
+     </div>
+</div>
+
+<script type="text/javascript">
+
+</script>
+
+{% endblock %}
+
