@@ -9,7 +9,7 @@
     </div>
 
     <div class="container">
-        <form id='form-guardian' class="form form-horizontal" method="post" role="form" enctype="multipart/form-data" action=" {{ url_for('people.new_guardian') }} ">
+        <form id='form-guardian' class="form form-horizontal" method="post" role="form" enctype="multipart/form-data" action=" {{ url_for('people.new_person', model='guardian') }} ">
 
     		 {{ form.hidden_tag() }}
              {{ wtf.form_errors(form, hiddens="only") }}
@@ -22,6 +22,9 @@
                 </div>
                 <div class="col-md-4">
                     {{ wtf.form_field(form.email) }}
+                </div>
+                <div class="col-md-4">
+                    {{ wtf.form_field(form.cpf) }}
                 </div>
             </div>
             <div class="row">

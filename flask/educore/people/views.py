@@ -1,26 +1,30 @@
-from flask import flash, redirect, render_template, url_for
+from flask import flash, redirect, render_template, url_for, request
 from flask_login import login_required, login_user, logout_user, current_user
 from . import people
 from ..manager_hub import ManagerHub
 
-@people.route('/people/new_guardian', methods=['GET'])
+@people.route('/people/new_<string:model>', methods=['GET', 'POST'])
 @login_required
-def new_guardian():
-	form = ManagerHub.get_hub_instance().registration_manager.get_registration_form(model='guardian')
+def new_person(model):
+	if request.method == 'GET':
+		form = ManagerHub.get_hub_instance().people_manager.get_registration_form(model)
+		return form
+	else:
+		next_page = ManagerHub.get_hub_instance().people_manager.submit_registration_form(model)
+		return next_page
+
+@people.route('/people/edit_<string:model>/<int:id>', methods=['GET','POST'])
+@login_required
+def edit_person(model, id):
+	if request.method == 'GET':
+		form = ManagerHub.get_hub_instance().people_manager.get_registration_form(model, id)
+		return form
+	else:
+		next_page = ManagerHub.get_hub_instance().people_manager.submit_registration_form(model, id)
+		return next_page
+
+@people.route('/people/list_<string:model>', methods=['GET'])
+@login_required
+def list_people(model):
+	form = ManagerHub.get_hub_instance().people_manager.get_registration_form(model)
 	return form
-
-@people.route('/people/new_guardian', methods=['POST'])
-@login_required
-def submit_guardian_form():
-	response = ManagerHub.get_hub_instance().registration_manager.submit_registration_form(model='guardian')
-
-@people.route('/people/new_student', methods=['GET'])
-@login_required
-def new_student():
-	form = ManagerHub.get_hub_instance().registration_manager.get_registration_form(model='student')
-	return form
-
-@people.route('/people/new_student', methods=['POST'])
-@login_required
-def submit_student_form():
-	response = ManagerHub.get_hub_instance().registration_manager.submit_registration_form(model='student')

@@ -11,7 +11,7 @@
     </div>
 
     <div class="container">
-    	   <form id='form-pessoas' class="form form-horizontal" method="post" role="form" enctype="multipart/form-data" action=" {{ url_for('people.new_student') }} ">
+    	   <form id='form-pessoas' class="form form-horizontal" method="post" role="form" enctype="multipart/form-data" action=" {{ url_for('people.new_person',model='student') }} ">
 
     		 {{ form.hidden_tag() }}
              {{ wtf.form_errors(form, hiddens="only") }}

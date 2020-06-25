@@ -11,7 +11,7 @@ import os
 # internal imports
 from config import app_config
 from educore import configure_educore
-from .managers.registration_manager import RegistrationManager
+from .managers.people_manager import PeopleManager
 from .managers.report_manager import ReportManager  
 
 # db variable initialization
@@ -56,7 +56,7 @@ def create_app(config_name):
     from .auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
 
-    app = configure_educore(app, RegistrationManager, ReportManager)
+    app = configure_educore(app, PeopleManager, ReportManager)
 
     #error handlers
     @app.errorhandler(403)

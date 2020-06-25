@@ -1,12 +1,12 @@
 from abc import ABC, abstractmethod
 
-class IRegistrationManager(ABC):
+class IPeopleManager(ABC):
     @abstractmethod
-    def get_registration_form(model):
+    def get_registration_form(model, id=None):
         pass
 
     @abstractmethod
-    def submit_registration_form(model):
+    def submit_registration_form(model, id=None):
         pass
 
 class IReportManager(ABC):

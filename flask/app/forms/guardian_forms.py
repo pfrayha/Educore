@@ -7,6 +7,7 @@ from wtforms_components import TimeField
 class AddOrEditGuardianForm(FlaskForm):
 	name = StringField('Nome', validators=[DataRequired()])
 	email = StringField('Email', validators=[DataRequired(), Email()])
+	cpf = StringField('CPF', validators=[DataRequired()])
 	cellphone = StringField('Celular', validators=[DataRequired()]) 
 	housephone = StringField('Telefone de Casa', validators=[Optional()])
 
