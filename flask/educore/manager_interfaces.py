@@ -11,5 +11,5 @@ class IPeopleManager(ABC):
 
 class IReportManager(ABC):
     @abstractmethod
-    def generate_report(student_id):
+    def generate_report(report_type, **kwargs):
         pass

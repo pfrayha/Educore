@@ -7,8 +7,8 @@ class ManagerHub():
     _hub_instance = None
     
     @staticmethod
-    def configure_hub_instance(people_manager,report_manager):
-        ManagerHub._hub_instance = ManagerHub.__ManagerHub(people_manager,report_manager)
+    def configure_hub_instance(people_manager, report_manager):
+        ManagerHub._hub_instance = ManagerHub.__ManagerHub(people_manager, report_manager)
 
     @staticmethod
     def get_hub_instance():
