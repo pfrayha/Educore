@@ -97,6 +97,9 @@ student_class_association = db.Table('student_classes',db.Model.metadata,
     
 class Student(db.Model):
     __tablename__ = 'students'
+    __table_args__ = (
+        db.UniqueConstraint('name', 'guardian_id', name='unique_name_guardian'),
+    )
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(128), unique=True)
@@ -109,14 +112,51 @@ class Subject(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     subject_name = db.Column(db.String(128), unique=True)
 
+class Unit(db.Model):
+    __tablename__ = 'units'
+
+    id = db.Column(db.Integer, primary_key=True)
+    unit_name = db.Column(db.String(128), unique=True)
+
 class Class(db.Model):
     __tablename__ = 'classes'
+    __table_args__ = (
+        db.UniqueConstraint('subject_id', 'teacher_id', 'unit_id', name='unique_subject_teacher_unit'),
+    )
 
     id = db.Column(db.Integer, primary_key=True)
     subject_id = db.Column(db.Integer, db.ForeignKey('subjects.id'), nullable=False)
     teacher_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    unit_id = db.Column(db.Integer, db.ForeignKey('units.id'), nullable=False)
 
-    subject = db.relationship('Subject', backref=db.backref('subjects', lazy=True))
+    subject = db.relationship('Subject', backref=db.backref('classes', lazy=True))
     teacher = db.relationship('User', backref=db.backref('classes', lazy=True))
+    unit = db.relationship('Unit', backref=db.backref('classes', lazy=True))
 
     students = db.relationship('Student', secondary = student_class_association)
+
+class Exam(db.Model):
+    __tablename__ = 'exams'
+    __table_args__ = (
+        db.UniqueConstraint('exam_date', 'class_id', name='unique_exam_date_class'),
+    )
+
+    id = db.Column(db.Integer, primary_key=True)
+    exam_date = db.Column(db.Date, nullable=False)
+    class_id = db.Column(db.Integer, db.ForeignKey('classes.id'), nullable=False)
+
+    exam_class = db.relationship('Class', backref=db.backref('exams', lazy=True))
+
+class Grade(db.Model):
+    __tablename__ = 'grades'
+    __table_args__ = (
+        db.UniqueConstraint('exam_id', 'student_id', name='unique_exam_student'),
+    )
+
+    id = db.Column(db.Integer, primary_key=True)
+    exam_id = db.Column(db.Integer, db.ForeignKey('exams.id'), nullable=False)
+    student_id = db.Column(db.Integer, db.ForeignKey('students.id'), nullable=False)
+    grade = db.Column(db.Float(decimal_return_scale=2), nullable=False)
+
+    exam = db.relationship('Exam', backref=db.backref('grades', lazy=True))
+    student = db.relationship('Student', backref=db.backref('grades', lazy=True))
