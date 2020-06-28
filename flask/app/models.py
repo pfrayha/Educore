@@ -160,3 +160,15 @@ class Grade(db.Model):
 
     exam = db.relationship('Exam', backref=db.backref('grades', lazy=True))
     student = db.relationship('Student', backref=db.backref('grades', lazy=True))
+
+class Presence(db.Model):
+    __tablename__ = 'presences'
+
+    id = db.Column(db.Integer, primary_key=True)
+    class_id = db.Column(db.Integer, db.ForeignKey('classes.id'), nullable=False)
+    student_id = db.Column(db.Integer, db.ForeignKey('students.id'), nullable=False)
+    presence_date = db.Column(db.Date, nullable=False)
+    presence = db.Column(db.Boolean, nullable=False)
+    
+    presence_class = db.relationship('Class', backref=db.backref('presences', lazy=True))
+    student = db.relationship('Student', backref=db.backref('presences', lazy=True))
