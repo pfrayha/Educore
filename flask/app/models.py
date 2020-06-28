@@ -163,6 +163,9 @@ class Grade(db.Model):
 
 class Presence(db.Model):
     __tablename__ = 'presences'
+    __table_args__ = (
+        db.UniqueConstraint('class_id', 'student_id', 'presence_date', name='unique_class_student_date'),
+    )
 
     id = db.Column(db.Integer, primary_key=True)
     class_id = db.Column(db.Integer, db.ForeignKey('classes.id'), nullable=False)
