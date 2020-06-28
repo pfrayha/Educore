@@ -8,4 +8,4 @@ from ..manager_hub import ManagerHub
 def generate_report(report_type):
 	kwargs = request.args
 	report_file = ManagerHub.get_hub_instance().report_manager.generate_report(report_type, **kwargs)
-	return form
+	return send_file(report_file, as_attachment=True)
