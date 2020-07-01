@@ -1,11 +1,10 @@
-from flask import flash, redirect, render_template, url_for, request
+from flask import flash, redirect, render_template, url_for, request, send_file
 from flask_login import login_required, login_user, logout_user, current_user
-from . import performance
+from . import report
 from ..manager_hub import ManagerHub
 
-@performance.route('/report/generate_report/<string:report_type>', methods=['POST'])
+@report.route('/report/generate_report/<string:report_type>', methods=['GET','POST'])
 @login_required
 def generate_report(report_type):
-	kwargs = request.args
-	report_file = ManagerHub.get_hub_instance().report_manager.generate_report(report_type, **kwargs)
-	return send_file(report_file, as_attachment=True)
+	args = request.args
+	return ManagerHub.get_hub_instance().report_manager.generate_report(report_type, **args)
