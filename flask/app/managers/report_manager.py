@@ -1,7 +1,7 @@
 
 from educore.manager_interfaces import IReportManager
 
-from flask import render_template
+from flask import render_template, send_file
 
 class ReportManager(IReportManager):
     @staticmethod
@@ -20,6 +20,12 @@ class ReportManager(IReportManager):
 
             report_template = render_template("report/student_performance_report.html", student=student, table_size=table_size, class_grades=class_grades, grade_averages=grade_averages)
 
-            return report_template
+            options = {
+                'encoding': "UTF-8"
+            }
+
+            pdfkit.from_string(report_template, '.\\temp.pdf', options=options)
+
+            return send_file("..\\temp.pdf", mimetype='pdf', as_attachment=True, attachment_filename=f"Relatório_de_Performance_{student.name}.pdf")
         else: 
             return render_404
