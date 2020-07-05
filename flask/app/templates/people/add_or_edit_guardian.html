@@ -4,12 +4,16 @@
 {% block body %}
 <div class="content-section">
     <div class="center text-center">
-    	<h1>Adicionar um Responsável</h1>
+    	<h1>Adicionar/Editar um Responsável</h1>
         <hr class="intro-divider">
     </div>
 
     <div class="container">
-        <form id='form-guardian' class="form form-horizontal" method="post" role="form" enctype="multipart/form-data" action=" {{ url_for('people.new_person', model='guardian') }} ">
+            {% if guardian %}
+                <form id='form-guardian' class="form form-horizontal" method="post" role="form" enctype="multipart/form-data" action=" {{ url_for('people.edit_person',model='guardian',id=guardian.id) }} ">
+            {% else %}
+                <form id='form-guardian' class="form form-horizontal" method="post" role="form" enctype="multipart/form-data" action=" {{ url_for('people.new_person',model='guardian') }} ">
+            {% endif %}
 
     		 {{ form.hidden_tag() }}
              {{ wtf.form_errors(form, hiddens="only") }}

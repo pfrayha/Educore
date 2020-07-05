@@ -18,13 +18,12 @@ class PeopleManager(IPeopleManager):
         if model == 'guardian':
             guardian = db.session.query(Guardian).get_or_404(id) if id else None
             form = AddOrEditGuardianForm(obj=guardian)
-            template = 'people/add_or_edit_guardian.html'
+            return render_template('people/add_or_edit_guardian.html', form=form, guardian=guardian)
         elif model == 'student':
             student = db.session.query(Student).get_or_404(id) if id else None
             form = AddOrEditStudentForm(obj=student)
             form.guardian_id.choices = [(t.id, t.name) for t in Guardian.query.order_by("name")]
-            template = 'people/add_or_edit_student.html'
-        return render_template(template, form=form)
+            return render_template('people/add_or_edit_student.html', form=form, student=student)
 
     @staticmethod
     def submit_registration_form(model, id=None):
@@ -140,4 +139,14 @@ class PeopleManager(IPeopleManager):
             flash( f'Aluno {action} com sucesso')
             # redirect to usuarios page
             return redirect(url_for(f'people.list_people',model='student'))
+
+    @staticmethod
+    def list_people(model, **filters):
+        if model == 'student':
+            from app import db
+            from ..models import Student
+
+            students = db.session.query(Student).all()
+
+            return render_template('people/list_students.html',students=students)
                 

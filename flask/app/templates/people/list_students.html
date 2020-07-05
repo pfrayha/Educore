@@ -1,0 +1,191 @@
+{% import "bootstrap/utils.html" as utils %}
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block body %}
+<div class="content-section">
+  <div class="outer">
+    <div class="middle">
+      <div class="inner">
+        <div class="flashed-messages">
+        {{ utils.flashed_messages() }}
+        </div>
+<!-- alunos -->
+        <div id="people" class="row alunos">
+        <h1 style="text-align:center;">Alunos:</h1>
+            <div class="center">
+              <hr class="intro-divider">
+              <!-- obs: 'url_for(...)' está entre aspas simples porque o javascript acha que /qualaquercoisas/ são expressoes. Nesse caso, entao, colocamos entre aspas simples pra ele tratar o retorno de 'url_for(...)' como string. -->
+              <div class="botoes">
+                <a href="{{ url_for('people.new_person', model='student') }}" class="btn btn-default btn-lg">
+                  <i class="fa fa-plus"></i>
+                  Adicionar um aluno
+                </a>
+                <a href="{{ url_for('people.new_person', model='guardian') }}" class="btn btn-default btn-lg">
+                    <i class="fa fa-plus"></i>
+                    Adicionar um responsável
+                </a>
+              </div>
+              </br>
+              {% if students %}
+              <table class="dt-responsive table table-striped table-bordered" id="people_table">
+                <thead>
+                  <tr>
+                    <th width="20%"> Nome </th>
+                    <th width="20%"> Nome Responsável </th>
+                    <th width="25%"> Telefone Responsável </th>
+                    <th width="15%"> Email Responsável </th>
+                    <th width="10%"> Editar </th>
+                    <th width="10%"> Editar Responsável </th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for student in students %}
+                  <tr class="taluno">
+                    <td> {{ student.name }}
+                    </td>
+                    <td> {{ student.guardian.name }} </td>
+                    <td> {{ student.guardian.cellphone }} / {{student.guardian.housephone}}</td>
+                    <td> {{ student.guardian.email }}</td>
+                    <td>
+                      <a href="{{ url_for('people.edit_person', model='student', id=student.id) }}">
+                        <i class="fa fa-pencil"></i> Editar
+                      </a>
+                    </td>
+                    <td>
+                        <a href="{{ url_for('people.edit_person', model='guardian', id=student.guardian.id) }}">
+                          <i class="fa fa-pencil"></i> Editar Responsável
+                        </a>
+                      </td>
+                    <td>
+                    </td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+              {% endif %}
+              <br/>
+              <div class="mybtn btn-swtich">
+              </div>
+            </div>
+            <br/>
+            <div style="text-align: center">
+          {% if not students %}
+              <div style="text-align: center">
+              <h3> Ainda não há nenhum aluno cadastrado. </h3>
+          {% endif %}
+              </div>
+            </div>
+
+        </div>
+
+        <div id="modal_deletar_pessoa" class="modal fade" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">
+                  Tem certeza que deseja desligar esta pessoa?
+                  <br/>
+                  <span style="color:red;">Essa ação não poderá ser revertida.</span>
+                </h4>
+              </div>
+              <div class="modal-body">
+                  <form class="form-horizontal">
+                    <div class="">
+                      <label class="control-label">Motivo do Desligamento:</label>
+                      <input id='deslig_motivo' class="form-control" type="text" name="deslig_motivo">
+                    </div>
+                    <div class="">
+                      <label class="control-label">Destino da Pessoa:</label>
+                      <input id='deslig_dest'  class="form-control" type="text" name="deslig_dest">
+                    </div>
+                  </form>
+                  <h5>Obs: os campos acima não são obrigatórios.</h5>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal">Cancelar</button>
+                <a id="btn-desligar" onclick="desligar_pessoa(); return false;" type="button" class="btn btn-danger btn-lg btn-ok">Desligar</a>
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+    </div>
+  </div>
+</div>
+
+<script>
+
+if(document.cookie && false) // Fix temporario ate descobrir o erro com o cookie
+  getPosCookie();
+
+function setPosCookie(id) {
+  var d = new Date();
+  d.setTime(d.getTime() + (1*24*60*60*1000));
+  var expires = "expires="+ d.toUTCString();
+  document.cookie = "id" + "=" + id + ";" + expires + "";
+}
+
+function getPosCookie() {
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    var id = ca[0].split('=')[1];
+    $("html, body").animate({ scrollTop: $('#'+id).offset().top }, 1000);
+    document.cookie = "id=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+}
+
+function desligar_pessoa(){
+
+  motivo = $('#deslig_motivo').val()
+  if (motivo == '')
+    motivo = 'sem_motivo'
+  destino = $('#deslig_dest').val()
+  if (destino == '')
+    destino = 'sem_destino'
+  url = $('#btn-desligar').attr('href')
+  url = url.replace('motivo', motivo)
+  url = url.replace('destino', destino)
+  window.location.replace(url)
+
+}
+
+$('#modal_deletar_pessoa').on('show.bs.modal', function(e) {
+    $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+});
+
+$('#modal_deletar_pessoa').on('hidden.bs.modal', function(e) {
+    $('#deslig_motivo').val('')
+    $('#deslig_dest').val('')
+});
+
+$(document).ready(function() {
+    var table = $('#people_table').DataTable( {
+      
+      /*MUDA LINGUAGEM*/
+        "language": {
+            "lengthMenu": "Mostrar _MENU_ alunos por página",
+            "zeroRecords": "Nada com esse filtro - desculpe",
+            "info": "Mostrando _PAGE_ de _PAGES_",
+            "infoEmpty": "Não há alunos com esse filtro",
+            "infoFiltered": "(filtrado de um total de _MAX_ alunos)",
+        	"paginate": {
+				"first": "Primeiro",
+				"last": "Último",
+				"next": "Próximo",
+				"previous": "Anterior",
+			},
+			"loadingRecords": "Carregando...",
+			"search": "Filtrar:",
+        	"aria": {
+				"sortAscending": ": Ative para ordenar a coluna de forma ascendente",
+				"sortDescending": ": Ative para odenar a coluna de forma descendente"
+			}
+        },
+
+        /*ORDENA POR ROLE POR DEFAULT*/
+        "order": [[ 1, "asc" ]] 
+    } );
+} );
+
+</script>
+{% endblock %}

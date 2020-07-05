@@ -5,16 +5,20 @@
 <div class="content-section">
     <div class="center text-center">
 
-    	<h1>Adicionar um aluno</h1>
+    	<h1>Adicionar/Editar um aluno</h1>
         <hr class="intro-divider">
 
     </div>
 
     <div class="container">
-    	   <form id='form-pessoas' class="form form-horizontal" method="post" role="form" enctype="multipart/form-data" action=" {{ url_for('people.new_person',model='student') }} ">
+            {% if student %}
+                <form id='form-pessoas' class="form form-horizontal" method="post" role="form" enctype="multipart/form-data" action=" {{ url_for('people.edit_person',model='student',id=student.id) }} ">
+            {% else %}
+    	        <form id='form-pessoas' class="form form-horizontal" method="post" role="form" enctype="multipart/form-data" action=" {{ url_for('people.new_person',model='student') }} ">
+            {% endif %}
 
-    		 {{ form.hidden_tag() }}
-             {{ wtf.form_errors(form, hiddens="only") }}
+            {{ form.hidden_tag() }}
+            {{ wtf.form_errors(form, hiddens="only") }}
 
             <div class="row">
                 <h3 class="sub"> Dados pessoais </h3>
