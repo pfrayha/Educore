@@ -175,3 +175,46 @@ class Presence(db.Model):
     
     presence_class = db.relationship('Class', backref=db.backref('presences', lazy=True))
     student = db.relationship('Student', backref=db.backref('presences', lazy=True))
+
+class Pessoa(db.Model, Serializer):
+    __tablename__ = 'pessoa'
+
+    pk_matricula_neam = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(50), unique=True)
+    celular = db.Column(db.CHAR(50))
+    foto = db.Column(db.LargeBinary())
+    desligamento_data = db.Column(db.Date)
+    desligamento_motivo = db.Column(db.String(100))
+    desligamento_destino = db.Column(db.String(100))
+    data_ingresso = db.Column(db.Date)
+    sexo = db.Column(db.CHAR(1))
+    data_nascimento = db.Column(db.Date)
+    identificador_tipo = db.Column(Enum('CPF', 'RG', 'Certidão', name='tipo_identificador'))
+    identificador_numero = db.Column(db.String(32))
+    identificador_complemento = db.Column(db.CHAR(2))
+    endereco_numero = db.Column(db.SmallInteger)
+    endereco_rua = db.Column(db.String(100))
+    endereco_complemento = db.Column(db.String(50))
+    endereco_bairro = db.Column(db.String(20))
+    endereco_cidade = db.Column(db.String(20))
+    endereco_uf = db.Column(db.CHAR(2))
+    endereco_cep = db.Column(db.CHAR(8))
+    tipo = db.Column(Enum('voluntario', 'aprendiz', 'aluno', name='tipo_pessoa'), nullable=False)
+    nome_responsavel = db.Column(ARRAY(db.String(length=100)))
+    telefone_responsavel = db.Column(ARRAY(db.CHAR(length=10)))
+    profissao_responsavel = db.Column(ARRAY(db.String(length=50)))
+    curso_puc = db.Column(db.String(50))
+    matricula_puc = db.Column(db.CHAR(7))
+    dificuldade = db.Column(ARRAY(db.String(length=50)))
+    serie = db.Column(db.String(10))
+    escolaridade_nivel = db.Column(db.String(30))
+    escolaridade_turno = db.Column(db.String(10))
+    nome_instituicao = db.Column(db.String(200))
+
+
+    def serialize(self):
+        d = Serializer.serialize(self)
+        del d['foto']
+        del d['pk_matricula_neam']
+        return d

@@ -13,6 +13,7 @@ from config import app_config
 from educore import configure_educore
 from .managers.people_manager import PeopleManager
 from .managers.report_manager import ReportManager  
+from .managers.neam_people_manager import NeamPeopleManager
 
 # db variable initialization
 db = SQLAlchemy()
@@ -56,7 +57,7 @@ def create_app(config_name):
     from .auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
 
-    app = configure_educore(app, PeopleManager, ReportManager)
+    app = configure_educore(app, NeamPeopleManager, ReportManager)
 
     #error handlers
     @app.errorhandler(403)

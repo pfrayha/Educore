@@ -32,11 +32,10 @@ class PeopleManager(IPeopleManager):
         from app import db
 
         if model == 'guardian':
-            form = AddOrEditGuardianForm()
-            if form.validate_on_submit():
-                if id:
-                    guardian = db.session.query(Guardian).get_or_404(id)
-                    
+            if id:
+                guardian = db.session.query(Guardian).get_or_404(id)
+                form = AddOrEditGuardianForm(obj=guardian)
+                if form.validate_on_submit():
                     guardian.name = form.name.data
                     guardian.email = form.email.data
                     guardian.cpf = form.cpf.data
@@ -53,91 +52,92 @@ class PeopleManager(IPeopleManager):
 
                     new_guardian = False
                     action = 'editado'
-                else:
-                    logger.error("Attempted to create guardian")
-                    guardian = Guardian(
-                        name = form.name.data,
-                        email = form.email.data,
-                        cpf = form.cpf.data,
-                        cellphone = form.cellphone.data,
-                        housephone = form.housephone.data,
+            else:
+                logger.error("Attempted to create guardian")
+                form = AddOrEditGuardianForm()
+                guardian = Guardian(
+                    name = form.name.data,
+                    email = form.email.data,
+                    cpf = form.cpf.data,
+                    cellphone = form.cellphone.data,
+                    housephone = form.housephone.data,
 
-                        address_number = form.address_number.data,
-                        address_street = form.address_street.data,
-                        address_complement = form.address_complement.data,
-                        address_neighborhood = form.address_neighborhood.data,
-                        address_city = form.address_city.data,
-                        address_uf = form.address_uf.data,
-                        address_cep = form.address_cep.data
-                    )
-                    new_guardian = True
-                    action = 'criado'
+                    address_number = form.address_number.data,
+                    address_street = form.address_street.data,
+                    address_complement = form.address_complement.data,
+                    address_neighborhood = form.address_neighborhood.data,
+                    address_city = form.address_city.data,
+                    address_uf = form.address_uf.data,
+                    address_cep = form.address_cep.data
+                )
+                new_guardian = True
+                action = 'criado'
 
-                try:
-                    msg=None
-                    db.session.add(guardian) if new_guardian else None
-                    db.session.commit()
+            try:
+                msg=None
+                db.session.add(guardian) if new_guardian else None
+                db.session.commit()
 
-                # except IntegrityError as ie:
-                #     logger.info(ie)
-                #     msg = str(ie)
-                # except DataError as de:
-                #     logger.info(de)
-                #     msg = str(de)
-                except Exception as e:
-                    logger.error(e)
-                    msg = str(e)
-                finally:
-                    if msg:
-                        db.session.rollback()
-                        logger.info(msg)
-                        return render_template('errors/500.html', msg=msg)
+            # except IntegrityError as ie:
+            #     logger.info(ie)
+            #     msg = str(ie)
+            # except DataError as de:
+            #     logger.info(de)
+            #     msg = str(de)
+            except Exception as e:
+                logger.error(e)
+                msg = str(e)
+            finally:
+                if msg:
+                    db.session.rollback()
+                    logger.info(msg)
+                    return render_template('errors/500.html', msg=msg)
 
-                flash( f'Responsável {action} com sucesso')
-                # redirect to usuarios page
-                return redirect(url_for(f'people.list_people',model='guardian'))
+            flash( f'Responsável {action} com sucesso')
+            # redirect to usuarios page
+            return redirect(url_for(f'people.list_people',model='guardian'))
+
         elif model == 'student':
-            form = AddOrEditStudentForm()
-            form.guardian_id.choices = [(t.id, t.name) for t in Guardian.query.order_by("name")]
-            if form.validate_on_submit():
-                if id:
-                    student = db.session.query(Student).get_or_404(id)
+            student = db.session.query(Student).get_or_404(id) if id else None
+            form = AddOrEditStudentForm(obj=student)
+            if id:
+                form.guardian_id.choices = [(t.id, t.name) for t in Guardian.query.order_by("name")]
+                if form.validate_on_submit():
                     
                     student.name = form.name.data
                     student.guardian_id = form.guardian_id.data
 
                     new_student = False
                     action = 'editado'
-                else:
-                    
-                    student = Student(
-                        name = form.name.data,
-                        guardian_id = form.guardian_id.data
-                    )
-                    new_student = True
-                    action = 'criado'
+            else:
+                student = Student(
+                    name = form.name.data,
+                    guardian_id = form.guardian_id.data
+                )
+                new_student = True
+                action = 'criado'
 
-                try:
-                    msg=None
-                    db.session.add(student) if new_student else None
-                    db.session.commit()
+            try:
+                msg=None
+                db.session.add(student) if new_student else None
+                db.session.commit()
 
-                # except IntegrityError as ie:
-                #     logger.info(ie)
-                #     msg = str(ie)
-                # except DataError as de:
-                #     logger.info(de)
-                #     msg = str(de)
-                except Exception as e:
-                    logger.error(e)
-                    msg = str(e)
-                finally:
-                    if msg:
-                        db.session.rollback()
-                        logger.info(msg)
-                        return render_template('errors/500.html', msg=msg)
+            # except IntegrityError as ie:
+            #     logger.info(ie)
+            #     msg = str(ie)
+            # except DataError as de:
+            #     logger.info(de)
+            #     msg = str(de)
+            except Exception as e:
+                logger.error(e)
+                msg = str(e)
+            finally:
+                if msg:
+                    db.session.rollback()
+                    logger.info(msg)
+                    return render_template('errors/500.html', msg=msg)
 
-                flash( f'Aluno {action} com sucesso')
-                # redirect to usuarios page
-                return redirect(url_for(f'people.list_people',model='student'))
+            flash( f'Aluno {action} com sucesso')
+            # redirect to usuarios page
+            return redirect(url_for(f'people.list_people',model='student'))
                 
