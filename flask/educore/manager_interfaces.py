@@ -9,6 +9,10 @@ class IPeopleManager(ABC):
     def submit_registration_form(model, id=None):
         pass
 
+    @abstractmethod
+    def list_people(model, **filters):
+        pass
+    
 class IReportManager(ABC):
     @abstractmethod
     def generate_report(report_type, **kwargs):

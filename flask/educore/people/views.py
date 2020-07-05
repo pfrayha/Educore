@@ -7,24 +7,20 @@ from ..manager_hub import ManagerHub
 @login_required
 def new_person(model):
 	if request.method == 'GET':
-		form = ManagerHub.get_hub_instance().people_manager.get_registration_form(model)
-		return form
+		return ManagerHub.get_hub_instance().people_manager.get_registration_form(model)
 	else:
-		next_page = ManagerHub.get_hub_instance().people_manager.submit_registration_form(model)
-		return next_page
+		return ManagerHub.get_hub_instance().people_manager.submit_registration_form(model)
 
 @people.route('/people/edit_<string:model>/<int:id>', methods=['GET','POST'])
 @login_required
 def edit_person(model, id):
 	if request.method == 'GET':
-		form = ManagerHub.get_hub_instance().people_manager.get_registration_form(model, id)
-		return form
+		return ManagerHub.get_hub_instance().people_manager.get_registration_form(model, id)
 	else:
-		next_page = ManagerHub.get_hub_instance().people_manager.submit_registration_form(model, id)
-		return next_page
+		return ManagerHub.get_hub_instance().people_manager.submit_registration_form(model, id)
 
 @people.route('/people/list_<string:model>', methods=['GET'])
 @login_required
 def list_people(model):
-	form = ManagerHub.get_hub_instance().people_manager.get_registration_form(model)
-	return form
+	filters = request.args
+	return ManagerHub.get_hub_instance().people_manager.list_people(model, **filters)

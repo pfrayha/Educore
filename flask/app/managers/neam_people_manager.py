@@ -270,3 +270,13 @@ class NeamPeopleManager(IPeopleManager):
 
                 # redirect to the alunos page
                 return redirect(url_for('people.list_people',model=model))
+
+    @staticmethod
+    def list_people(model, **filters):
+        from app import db
+        from ..models import Pessoa
+        
+        people = db.session.query(Pessoa).filter(Pessoa.tipo == model)
+
+        return render_template("people/pessoas.html",people=people, model=model)
+        
