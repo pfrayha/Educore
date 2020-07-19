@@ -141,7 +141,7 @@ class PeopleManager(IPeopleManager):
             return redirect(url_for(f'people.list_people',model='student'))
 
     @staticmethod
-    def list_people(model, **filters):
+    def list_people(model):
         if model == 'student':
             from app import db
             from ..models import Student
@@ -149,4 +149,43 @@ class PeopleManager(IPeopleManager):
             students = db.session.query(Student).all()
 
             return render_template('people/list_students.html',students=students)
-                
+    
+    @staticmethod
+    def delete_person(model, id):
+        if model == 'student':
+            from app import db
+            from ..models import Student
+
+            target = db.session.query(Student).get_or_404(id)
+
+        elif model == 'guardian':
+            from app import db
+            from ..models import Guardian
+
+            target = db.session.query(Guardian).get_or_404(id)
+        
+        else: 
+            target = None
+
+        try:
+            msg = None
+            if target:
+                db.session.delete(target)
+                db.session.commit()
+
+        # except IntegrityError as ie:
+        #     logger.info(ie)
+        #     msg = str(ie)
+        # except DataError as de:
+        #     logger.info(de)
+        #     msg = str(de)
+        except Exception as e:
+            logger.error(e)
+            msg = str(e)
+        finally:
+            if msg:
+                db.session.rollback()
+                logger.info(msg)
+                return render_template('errors/500.html', msg=msg)
+            
+            return redirect(url_for(f'people.list_people',model=model))

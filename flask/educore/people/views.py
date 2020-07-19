@@ -24,3 +24,8 @@ def edit_person(model, id):
 def list_people(model):
 	filters = request.args
 	return ManagerHub.get_hub_instance().people_manager.list_people(model, **filters)
+
+@people.route('/people/delete_<string:model>/<int:id>', methods=['GET'])
+@login_required
+def delete_person(model, id):
+	return ManagerHub.get_hub_instance().people_manager.delete_person(model, id)

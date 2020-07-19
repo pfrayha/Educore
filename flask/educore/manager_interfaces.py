@@ -10,7 +10,11 @@ class IPeopleManager(ABC):
         pass
 
     @abstractmethod
-    def list_people(model, **filters):
+    def list_people(model):
+        pass
+
+    @abstractmethod
+    def delete_person(model, id):
         pass
     
 class IReportManager(ABC):
