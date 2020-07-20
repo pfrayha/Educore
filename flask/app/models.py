@@ -76,7 +76,7 @@ class Guardian(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(128), unique=True)
     email = db.Column(db.String(128), index=True, unique=True)
-    cpf = db.Column(db.String(15), unique=True, )
+    cpf = db.Column(db.String(15), unique=True )
     cellphone = db.Column(db.String(15))
     housephone = db.Column(db.String(15))
 

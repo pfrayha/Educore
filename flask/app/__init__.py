@@ -58,6 +58,7 @@ def create_app(config_name):
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
 
     app = configure_educore(app, PeopleManager, ReportManager)
+    # app = configure_educore(app, NeamPeopleManager, ReportManager)
 
     #error handlers
     @app.errorhandler(403)
