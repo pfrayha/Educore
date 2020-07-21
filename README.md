@@ -18,7 +18,7 @@ The configuration of the framework requires two main phases. The first is the im
 
 The second step for configuration of the framework happens during the inicialization phase of the application itself. At some point during the creation of app, the developer must run the function _configure\_educore_ which is imported using the statement
 
-_from educore import configure\_educore_
+    from educore import configure_educore
 
 After importing the function, every implementation of the manager interfaces must also be imported and passed, alongside the app variable itself, to the _configure\_educore_ function. It is important to note that the app variable passed is **NOT** modified and the return value of the function **MUST** overwrite the app variable.
 
