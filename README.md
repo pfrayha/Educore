@@ -14,7 +14,7 @@ Configuration
 
 The configuration of the framework requires two main phases. The first is the implementation of the manager interfaces that will be used by the developer to construct the necessary code hot spots. All manager interfaces are documented fully in the file _flask/educore/manager\_interfaces.py_. To import any manager interface to be implemented, you must use the statement 
 
-`from educore.manager\_interfaces import IPeopleManager` (or whichever other manager(s) are needed)
+    from educore.manager_interfaces import IPeopleManager, IReportManager
 
 The second step for configuration of the framework happens during the inicialization phase of the application itself. At some point during the creation of app, the developer must run the function _configure\_educore_ which is imported using the statement
 
