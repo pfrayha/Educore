@@ -6,6 +6,7 @@ This framework works utilizing the _Flask_ environment to offer a streamlined ap
 The framework itself is implemented inside _flask/educore_ and the _flask/app_ folder hosts the code for the prototype example. The _flask/migrations_ folder works with the _manage.py_ module to handle database modelling and migrations used for the prototype.
 
 Given this initial stage of development, _Educore_ is yet to be made available through _pip_ to be used externally.
+
 ---
 
 Configuration
@@ -22,6 +23,7 @@ _from educore import configure\_educore_
 After importing the function, every implementation of the manager interfaces must also be imported and passed, alongside the app variable itself, to the _configure\_educore_ function. It is important to note that the app variable passed is **NOT** modified and the return value of the function **MUST** overwrite the app variable.
 
 After both these steps have been executed, the framework is now configured.
+
 ---
 
 Reserved route names
