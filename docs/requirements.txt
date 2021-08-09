@@ -48,7 +48,7 @@ pyrsistent==0.16.0
 python-dateutil==2.8.0
 python-editor==1.0.4
 pytz==2019.2
-pywin32==228
+pywin32==301
 reportlab==3.5.42
 requests==2.23.0
 retrying==1.3.3
